@@ -84,6 +84,11 @@ func _process(dt: float) -> void:
 			if s.slow.t >= s.slow.T:
 				s.slow = null
 		save_acc += dt
+		if save_acc > 4.0:
+			save_acc = 0.0
+			save_run()
+	elif demo:
+		home_tick(dt)
 	else:
 		s.anim += dt
 	apply_view()
@@ -269,3 +274,102 @@ func begin_hold(o, pid) -> bool:
 func release_hold(pid) -> void:
 	if card_hold != null and card_hold.get("pid") == pid:
 		card_hold = null
+
+# ---------- layar utama (dunia hidup di belakang judul) ----------
+func home_scene() -> void:
+	reset()
+	demo = true
+	running = false
+	paused = false
+	s.t = D.DAY - 5
+	s.m.x = CX + 40
+	s.m.dir = -1
+	for e in [[1, "g", 3], [4, "tesla", 2], [6, "mortar", 2], [7, "rocket", 2], [3, "f", 2]]:
+		var t = s.towers[e[0]]
+		t.ty = e[1]
+		t.lv = e[2]
+		t.hp = tower_max_hp(t)
+	for k in 7:
+		var d = spawn_drone("h" if k == 6 else "s", 30.0 + k * 48)
+		d.y = rnd(120, 380)
+		d.demo = k
+
+func home_tick(dt: float) -> void:
+	s.anim += dt
+	for d in s.drones:
+		d.ph += dt
+		d.x += sin(s.anim * .4 + d.demo * 1.7) * 22 * dt
+		d.y += cos(s.anim * .3 + d.demo) * 8 * dt
+		if d.x < 10:
+			d.x = W - 10
+		if d.x > W - 10:
+			d.x = 10.0
+	for t in s.towers:
+		if t.lv:
+			t.ang = -PI / 2 + sin(s.anim * .7 + t.i) * .6
+
+# ---------- simpan / lanjut ----------
+const NOSAVE := ["job", "fetch", "claim", "tw", "sh", "dc", "tgt", "aim", "atkD"]
+func _strip(v):
+	if v is Dictionary:
+		var o = {}
+		for k in v:
+			var x = v[k]
+			if k is String and k in NOSAVE and (x is Dictionary or x is Array):
+				continue
+			o[k] = _strip(x)
+		return o
+	if v is Array:
+		var a = []
+		for x in v:
+			a.append(_strip(x))
+		return a
+	return v
+
+func save_run() -> void:
+	if not running or s.is_empty() or s.over or demo:
+		return
+	var f = FileAccess.open(Prof.run_path(), FileAccess.WRITE)
+	if f:
+		f.store_string(var_to_str({"v": 1, "S": _strip(s)}))
+
+func load_run() -> bool:
+	var j = Prof.peek_run()
+	if j == null:
+		return false
+	var p = Prof.prof()
+	if j.has("ch") and p.chars.has(j.ch) and p.chars[j.ch].own:
+		p.ch = j.ch
+		Prof.save_all()
+	demo = false
+	reset()
+	for k in j:
+		s[k] = j[k]
+	for k in ["missiles", "shells", "nets", "bul", "beams", "shots", "eshots", "slugs", "bolts", "fx", "waves", "rails", "saws", "nades", "slash", "slashMk"]:
+		s[k] = []
+	s.slow = null
+	s.pick = null
+	s.over = false
+	for b in s.bots:
+		b.job = null
+		b.fetch = null
+		b.atkD = null
+		b.onsite = false
+		if b.st == "fetch":
+			b.st = "rest"
+	for t in s.towers:
+		t.tgt = null
+	dmap = {}
+	var mx = 0
+	for d in s.drones:
+		if d.has("uid"):
+			dmap[d.uid] = true
+			mx = maxi(mx, d.uid)
+	_uid = maxi(_uid, mx + 1)
+	if not s.has("run"):
+		s.run = {"len": 0}
+	card_hold = null
+	cam_y = clampf(s.m.y - vh * .62, 0.0, camy_max())
+	running = true
+	paused = true
+	return true

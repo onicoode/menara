@@ -1,24 +1,29 @@
 extends Node
 func _ready():
 	var m = load("res://scenes/main.tscn").instantiate()
+	m.name = "Main"
 	add_child(m)
-	await get_tree().process_frame
-	m.start_run(5)
-	m.s.coins = 60
-	var tys = ["g", "mortar", "tesla", "laser", "rocket", "f"]
-	for i in 6:
-		var t = m.s.towers[i]
-		t.ty = tys[i]
-		t.lv = 3 + i % 3
-		t.hp = m.tower_max_hp(t)
-	m.s.t = 52.0
-	m.s.m.x = 120.0
-	for i in 400:
+	for i in 30:
 		await get_tree().process_frame
-		if i == 80:
-			for k in 6:
-				m.spawn_drone("s")
-	var img = get_viewport().get_texture().get_image()
-	img.save_png("res://tests/shot2.png")
-	print("RENDER OK day=", m.s.day, " t=", m.s.t, " drones=", m.s.drones.size())
+	get_viewport().get_texture().get_image().save_png("res://tests/s_home.png")
+	m.menus.show_hangar(false)
+	for i in 10:
+		await get_tree().process_frame
+	m.menus.hg_sel = "katana"
+	m.menus.hg_desc.visible = true
+	m.menus.hangar_sync()
+	for i in 10:
+		await get_tree().process_frame
+	get_viewport().get_texture().get_image().save_png("res://tests/s_hangar.png")
+	m.menus.show_towers()
+	for i in 10:
+		await get_tree().process_frame
+	get_viewport().get_texture().get_image().save_png("res://tests/s_tower.png")
+	m.start(5)
+	m.g.s.coins = 60
+	m.g.s.m.x = 120.0
+	for i in 60:
+		await get_tree().process_frame
+	get_viewport().get_texture().get_image().save_png("res://tests/s_play.png")
+	print("RENDER OK")
 	get_tree().quit()

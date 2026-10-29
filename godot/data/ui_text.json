@@ -1,0 +1,97 @@
+{
+ "weap": {
+  "weld": {
+   "name": "Las busur",
+   "icon": "weld",
+   "desc": "Busur listrik otomatis ke drone terdekat. Sambarannya melompat ke drone lain (sampai 5 lompatan) dan bisa menyetrum drone hingga lumpuh."
+  },
+  "rail": {
+   "name": "Railgun",
+   "icon": "w_rail",
+   "desc": "Mengisi daya lalu menembakkan sinar lurus yang menembus semua drone di jalurnya. Jangkauan paling jauh. Mulai Lv 3 sinarnya menggema: tembakan susulan di jalur yang sama (dua susulan di Lv 5)."
+  },
+  "saw": {
+   "name": "Bumerang gergaji",
+   "icon": "w_saw",
+   "desc": "Gergaji yang terbang menjauh lalu kembali ke tangan, memotong semua drone yang dilewati di kedua arah. Lv 3 melempar dua, Lv 5 melempar tiga bilah sekaligus."
+  },
+  "nade": {
+   "name": "Granat lengket",
+   "icon": "w_nade",
+   "desc": "Granat yang menempel di drone lalu meledak sesaat kemudian, melukai semua drone di sekitarnya. Mulai Lv 3 pecah jadi bom-bom kecil susulan (lima di Lv 5)."
+  },
+  "buddy": {
+   "name": "Drone pendamping",
+   "icon": "w_buddy",
+   "desc": "Drone kecil yang terbang menyerang drone musuh di sekitarmu dengan peluru cepat. Lv 5 menjadi dua drone. Mulai Lv 3 menembakkan dua peluru sekaligus."
+  }
+ },
+ "upg": {
+  "katana": {
+   "name": "Katana",
+   "icon": "wp_katana",
+   "desc": "Tebasan pedang otomatis dengan jangkauan sangat pendek, tapi damage-nya tinggi dan memotong semua drone yang terjangkau. Level menambah damage, kecepatan tebas, dan jangkauan."
+  },
+  "orbit": {
+   "name": "Bilah orbit",
+   "icon": "wp_orbit",
+   "desc": "Bilah yang berputar mengelilingimu dan melukai drone yang tersentuh. Level menambah jumlah bilah, damage, dan jarak putarnya."
+  },
+  "shot": {
+   "name": "Senapan tabur",
+   "icon": "wp_shot",
+   "desc": "Semburan peluru melebar ke drone terdekat. Level menambah peluru, damage, kecepatan tembak, dan jangkauan."
+  },
+  "mini": {
+   "name": "Roket mini",
+   "icon": "wp_mini",
+   "desc": "Roket kecil pelacak yang mengejar drone di sekitarmu. Level menambah jumlah roket, damage, dan jangkauan."
+  },
+  "field": {
+   "name": "Medan statis",
+   "icon": "wp_field",
+   "desc": "Lingkaran listrik di sekitarmu yang terus melukai drone di dalamnya. Level menambah damage dan memperluas lingkaran."
+  },
+  "bots": {
+   "name": "Robot tempur",
+   "icon": "worker",
+   "desc": "Robot pekerja ikut bertempur: menempel di drone musuh dan mengelasnya. Level 1 hanya satu robot yang menyerang, tiap level menambah satu robot (maks 5). Robot lain tetap bekerja mengumpulkan suku cadang dan memperbaiki."
+  },
+  "hp": {
+   "name": "Baju zirah",
+   "icon": "heart",
+   "desc": "Menambah 2 HP maksimum per level."
+  },
+  "bat": {
+   "name": "Batre jetpack",
+   "icon": "battery",
+   "desc": "Menambah 4 detik waktu terbang per level. Kecepatan isi ulang ikut naik."
+  },
+  "jet": {
+   "name": "Jet peredam",
+   "icon": "jetfall",
+   "desc": "Jetpack menyala sendiri saat kamu jatuh: jatuh jadi lebih mulus dan damage pendaratan berkurang tiap level. Di Lv 5 pendaratan selalu mulus tanpa damage."
+  },
+  "aura": {
+   "name": "Aura kejut",
+   "icon": "blast",
+   "desc": "Memperbesar radius dan dorongan aura kejut 15% per level, dan membuatnya makin hemat batre: 75% di Lv 0 turun ke 30% di Lv 5."
+  }
+ },
+ "twinfo": {
+  "g": "Penembak serba bisa: damage, jangkauan, akurasi dan peluang kritis semuanya sedang. Tidak ada yang menonjol, tidak ada kelemahan besar.",
+  "f": "Damage per detik tertinggi dan membakar semua drone di kerucut apinya, tapi jangkauannya paling pendek.",
+  "mortar": "Melontarkan peluru yang meledak di area. Jangkauan jauh, tapi akurasinya rendah, lambat, dan punya titik buta di dekat menara.",
+  "gatling": "Menyemburkan peluru lemah sangat cepat. DPS tinggi dan jangkauan menengah, tetapi banyak peluru meleset.",
+  "sniper": "Jangkauan paling jauh dan hampir tidak pernah meleset. Satu tembakan keras, tapi sangat lambat, punya titik buta, dan rapuh.",
+  "tesla": "Petir yang melompat dari drone ke drone, sesekali membuat drone tersetrum dan bergerak kacau.",
+  "rocket": "Rudal pelacak berdamage besar. Mengutamakan drone berat dan bos.",
+  "laser": "Sinar menerus. Damage per detik naik sampai 3x selama tetap mengenai satu target.",
+  "emp": "Denyut berkala yang membuat semua drone di sekitarnya lumpuh sesaat.",
+  "net": "Menjerat satu drone di tempat sehingga menara lain mudah menghabisinya.",
+  "decoy": "Suar umpan: drone di sekitarnya menyerangnya lebih dulu. Punya HP dan kembali saat fajar.",
+  "magnet": "Menarik suku cadang yang jatuh dan memberi bonus suku cadang untuk drone yang mati di jangkauannya.",
+  "repair": "Dok perbaikan: saat malam memulihkan shield di sekitarnya dan juga core.",
+  "solar": "Panel surya: mempercepat isi ulang jetpack dan memberi suku cadang tiap fajar."
+ }
+}

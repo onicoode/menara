@@ -153,3 +153,13 @@ func run_path(i := -1) -> String:
 func clear_run(i := -1) -> void:
 	if FileAccess.file_exists(run_path(i)):
 		DirAccess.remove_absolute(ProjectSettings.globalize_path(run_path(i)))
+
+func peek_run():
+	var p = run_path()
+	if not FileAccess.file_exists(p):
+		return null
+	var f = FileAccess.open(p, FileAccess.READ)
+	var v = str_to_var(f.get_as_text())
+	if v is Dictionary and v.has("S"):
+		return v.S
+	return null

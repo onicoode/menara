@@ -11,6 +11,7 @@ Balance="*res://scripts/balance.gd"
 D="*res://scripts/data.gd"
 Dev="*res://scripts/dev.gd"
 Prof="*res://scripts/prof.gd"
+Ic="*res://scripts/icons.gd"
 
 [display]
 window/size/viewport_width=360
