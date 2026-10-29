@@ -8,6 +8,9 @@ config/features=PackedStringArray("4.4", "Mobile")
 
 [autoload]
 Balance="*res://scripts/balance.gd"
+D="*res://scripts/data.gd"
+Dev="*res://scripts/dev.gd"
+Prof="*res://scripts/prof.gd"
 
 [display]
 window/size/viewport_width=390
