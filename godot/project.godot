@@ -13,7 +13,7 @@ Dev="*res://scripts/dev.gd"
 Prof="*res://scripts/prof.gd"
 
 [display]
-window/size/viewport_width=390
+window/size/viewport_width=360
 window/size/viewport_height=780
 window/stretch/mode="canvas_items"
 window/stretch/aspect="keep_width"
@@ -23,3 +23,6 @@ window/handheld/orientation=1
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+
+[input_devices]
+pointing/emulate_touch_from_mouse=true

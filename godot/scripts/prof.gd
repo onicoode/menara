@@ -145,3 +145,11 @@ func buy_char(id: String) -> bool:
 	p.ch = id
 	save_all()
 	return true
+
+# ---------- simpanan run (per profil) ----------
+func run_path(i := -1) -> String:
+	return "user://mr_run_%d.json" % (active if i < 0 else i)
+
+func clear_run(i := -1) -> void:
+	if FileAccess.file_exists(run_path(i)):
+		DirAccess.remove_absolute(ProjectSettings.globalize_path(run_path(i)))
