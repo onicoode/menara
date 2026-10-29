@@ -1,0 +1,7 @@
+kunci/
+*.jks
+keystore*
+*.apk
+*.jar
+build/
+.gradle/
