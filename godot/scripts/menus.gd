@@ -421,12 +421,12 @@ func _title_input(e: InputEvent) -> void:
 		_dev_last = now
 		if _dev_taps >= 5:
 			_dev_taps = 0
-			Dev.set_meta("unlocked", true)
-			var d = get_node_or_null("/root/Main/DevPanel")
-			if d == null:
-				d = get_tree().root.find_child("DevPanel", true, false)
+			Dev.cfg.btn = not Dev.cfg.btn
+			Dev.save_cfg()
+			var d = get_tree().root.find_child("DevPanel", true, false)
 			if d:
-				d.open()
+				d.sync_btn()
+			sfx("power")
 
 func _apply_audio() -> void:
 	var a = get_node_or_null("/root/Audio")

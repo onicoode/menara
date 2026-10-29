@@ -92,6 +92,16 @@ func _on_win() -> void:
 	ended = true
 	g.on_win_event()
 
+func _process(_dt: float) -> void:
+	if g == null or g.s.is_empty():
+		return
+	var a = get_node_or_null("/root/Audio")
+	if a == null:
+		return
+	var playing: bool = g.running and not g.paused and not g.s.over and not g.demo
+	var m = 1 if playing else (2 if menus.cur != "" else 0)
+	a.set_mode(m, D.darkness(g.s.t) if playing else 0.0)
+
 func _on_run_ended(kind: String, nights: int, earn: int, bonus: int) -> void:
 	g.clear_input()
 	menus.show_result(kind, nights, earn, bonus)
@@ -140,7 +150,6 @@ func _back() -> void:
 func _unhandled_key_input(e: InputEvent) -> void:
 	if e is InputEventKey and e.pressed and not e.echo:
 		if e.keycode == KEY_QUOTELEFT or e.keycode == KEY_F2:
-			if Dev.has_meta("unlocked") or OS.is_debug_build():
-				dev_panel.toggle()
+			dev_panel.toggle()
 		elif e.keycode == KEY_ESCAPE:
 			_back()

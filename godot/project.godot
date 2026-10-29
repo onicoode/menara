@@ -12,6 +12,7 @@ D="*res://scripts/data.gd"
 Dev="*res://scripts/dev.gd"
 Prof="*res://scripts/prof.gd"
 Ic="*res://scripts/icons.gd"
+Audio="*res://scripts/audio.gd"
 
 [display]
 window/size/viewport_width=360

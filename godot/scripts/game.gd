@@ -91,6 +91,10 @@ func _process(dt: float) -> void:
 		home_tick(dt)
 	else:
 		s.anim += dt
+		var au = get_node_or_null("/root/Audio")
+		if au:
+			au.thrust(false)
+			au.charge(-1.0)
 	apply_view()
 	hud_changed.emit()
 
