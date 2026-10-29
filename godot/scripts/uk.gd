@@ -13,12 +13,11 @@ static var font_m: Font
 static func fonts() -> void:
 	if font_b != null:
 		return
-	font_b = FontFile.new()
-	font_b.load_dynamic_font("res://assets/fonts/pixelify-sans-latin-700-normal.woff2")
-	font_b.antialiasing = TextServer.FONT_ANTIALIASING_NONE
-	font_m = FontFile.new()
-	font_m.load_dynamic_font("res://assets/fonts/pixelify-sans-latin-500-normal.woff2")
-	font_m.antialiasing = TextServer.FONT_ANTIALIASING_NONE
+	font_b = load("res://assets/fonts/pixelify-sans-latin-700-normal.woff2")
+	font_m = load("res://assets/fonts/pixelify-sans-latin-500-normal.woff2")
+	for f in [font_b, font_m]:
+		if f is FontFile:
+			f.antialiasing = TextServer.FONT_ANTIALIASING_NONE
 
 static func theme() -> Theme:
 	fonts()

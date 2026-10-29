@@ -1,7 +1,5 @@
 .godot/
-*.import
 export_presets.cfg
 *.translation
 .godot/
-*.import
 tests/*.png

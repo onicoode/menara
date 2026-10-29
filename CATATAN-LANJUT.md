@@ -4,6 +4,9 @@ Versi terakhir: artefak v53, APK v1.23 (versionCode 24).
 Artefak (URL tetap, kirim ke Claude agar di-update di tempat yang sama):
 https://claude.ai/artifact/CYGihzegiuamKnbFYoYUnH
 
+## Godot (pindah dari HTML5)
+Game sudah dipindah penuh ke Godot 4.4.1 di folder `godot/` (lihat `godot/README.md` dan `godot/PORTING.md`). HTML5 tetap sebagai acuan dan sumber APK lama (v1.23). Pengembangan baru dilakukan di `godot/`; tes: `godot --headless --path godot res://tests/selftest.tscn`.
+
 ## Isi paket
 - proyek-gradle/game-src/ : sumber game (va.js vaud.js vb.js vt.js vm.js vc.js vd.js vu.js + vh.html). Urutan gabung: va, vaud, vb, vt, vm, vc, vd, vdemo, vtower, vdev, vu (satu closure IIFE).
 - proyek-gradle/tools/make_html.sh : menggabungkan jadi index.html satu file.

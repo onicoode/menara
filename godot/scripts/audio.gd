@@ -1,6 +1,6 @@
 extends Node
 ## Autoload "Audio": semua suara disintesis lewat kode (tanpa berkas), port dari vaud.js.
-## SFX dirender sekali saat start (thread), musik dirender sebagai loop (menu, siang, malam).
+## SFX dirender sekali saat start (dicicil per frame), musik dirender sebagai loop (menu, siang, malam).
 
 const R := 22050
 const RM := 16000
@@ -17,7 +17,6 @@ var players: Array = []
 var pidx := 0
 var mus_p := {}            # nama -> AudioStreamPlayer
 var last := {}
-var thread: Thread
 var mode := 0              # 0 hening, 1 main, 2 menu
 var dark := 0.0
 var th_p: AudioStreamPlayer
@@ -26,6 +25,7 @@ var th_on := false
 var cf := 880.0
 var bg := false
 var _rs := 12345
+var _t0 := 0
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -42,13 +42,14 @@ func _ready() -> void:
 	add_child(th_p)
 	ch_p = AudioStreamPlayer.new()
 	add_child(ch_p)
-	thread = Thread.new()
-	thread.start(_render_all)
+	_render_all.call_deferred()
 	apply_settings()
 
-func _exit_tree() -> void:
-	if thread != null and thread.is_started():
-		thread.wait_to_finish()
+## beri kesempatan frame bila sudah memakai > 6 ms (render dicicil di thread utama, kompatibel Web)
+func _slice() -> void:
+	if Time.get_ticks_usec() - _t0 > 6000:
+		await get_tree().process_frame
+		_t0 = Time.get_ticks_usec()
 
 # ---------- sintesis ----------
 func _rnd() -> float:
@@ -352,9 +353,13 @@ func _sfx_buf(n: String) -> PackedFloat32Array:
 	return b
 
 func _render_all() -> void:
+	_t0 = Time.get_ticks_usec()
 	var out := {}
+	var cnt := 0
 	for n in NAMES:
 		out[n] = _to_wav(_sfx_buf(n), R, 3.0)
+		cnt += 1
+		await _slice()
 	# loop tipis untuk jetpack dan charge
 	var tb = PackedFloat32Array()
 	tb.resize(R)
@@ -368,9 +373,9 @@ func _render_all() -> void:
 		cb[i] = (4.0 * absf((ph - floor(ph)) - .5) - 1.0) * .15
 	out["_charge"] = _to_wav(cb, R, 2.0, true)
 	# musik
-	out["menu"] = _render_menu()
-	out["day"] = _render_play(0.0)
-	out["night"] = _render_play(1.0)
+	out["menu"] = await _render_menu()
+	out["day"] = await _render_play(0.0)
+	out["night"] = await _render_play(1.0)
 	call_deferred("_done", out)
 
 func _done(out: Dictionary) -> void:
@@ -395,6 +400,7 @@ func _render_play(d: float) -> AudioStreamWAV:
 	b.resize(int(64 * st * RM))
 	var aw = 1.0 - d
 	for i in 64:
+		await _slice()
 		var when = i * st
 		var bar = (i >> 3) & 7
 		var s = i & 7
@@ -419,6 +425,7 @@ func _render_menu() -> AudioStreamWAV:
 	var b = PackedFloat32Array()
 	b.resize(int(64 * st * RM))
 	for i in 64:
+		await _slice()
 		var when = i * st
 		var bar = (i >> 3) & 7
 		var s = i & 7
